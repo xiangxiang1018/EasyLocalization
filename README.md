@@ -61,6 +61,6 @@
  
    举例：初始化时调用Localization(.id = 1)的SetText(LocalizationDataHelper.GetTextById(2))方法
    
-   配置表：id = 1 --> 我来自于{0}； id = 2 --> 中国。 
+   配置表：id = 1 --> 我来自于{0}； id = 2 --> 中国
    
    当设置语言为中文时，内容为：我来自于中国。当语言切换为英文时，代码无非再次设置，内容会自动变成：I'm from China
