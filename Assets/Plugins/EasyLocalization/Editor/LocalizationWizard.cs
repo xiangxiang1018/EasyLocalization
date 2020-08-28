@@ -25,7 +25,8 @@ namespace EasyLocalization
         public static void TranslateJson()
         {
             //创建完毕 更新Localization.json的翻译情况
-            EditorCoroutine.StartCoroutine(waitToReadJson());
+            if(CheckBaiduAppID.Check(true))
+                EditorCoroutine.StartCoroutine(waitToReadJson());
         }
 
         [MenuItem("EasyLocalization/N - Clear Progressbar")]
@@ -200,6 +201,20 @@ namespace EasyLocalization
             LocalizationDataHelper.WriteConfig(data.id, data);
         }
         #endregion
+    }
+
+    public static class CheckBaiduAppID
+    {
+        public static bool Check(bool showDialog = false)
+        {
+            if(string.IsNullOrEmpty(Translate.appId) || string.IsNullOrEmpty(Translate.password))
+            {
+                if(showDialog)
+                    EditorUtility.DisplayDialog("EasyLocalization", "Please set your own Baidu apppid and passwordkey at Translate.cs\nYou can get them on https://api.fanyi.baidu.com/", "OK");
+                return false;
+            }
+            return true;
+        }
     }
 
 }

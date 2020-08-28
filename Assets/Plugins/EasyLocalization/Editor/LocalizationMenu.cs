@@ -85,19 +85,26 @@ namespace EasyLocalization
                         {
                             if(item != LanguageType.auto)
                             {
-                                TranslationResult result = Translate.TranslateByBaidu(text, LanguageType.auto.ToString(), item.ToString());
-                                if(result != null)
+                                if(CheckBaiduAppID.Check())
                                 {
-                                    string resultText = string.Empty;
-                                    //字符串中如果有一些转义符，结果会是多个，直接用\n拼接了。。。一般也用不到别的转义符了
-                                    for(int j = 0; j < result.trans_result.Length; j++)
+                                    TranslationResult result = Translate.TranslateByBaidu(text, LanguageType.auto.ToString(), item.ToString());
+                                    if (result != null)
                                     {
-                                        if (j != result.trans_result.Length - 1)
-                                            resultText += result.trans_result[j].dst + "\n";
-                                        else
-                                            resultText += result.trans_result[j].dst;
+                                        string resultText = string.Empty;
+                                        //字符串中如果有一些转义符，结果会是多个，直接用\n拼接了。。。一般也用不到别的转义符了
+                                        for (int j = 0; j < result.trans_result.Length; j++)
+                                        {
+                                            if (j != result.trans_result.Length - 1)
+                                                resultText += result.trans_result[j].dst + "\n";
+                                            else
+                                                resultText += result.trans_result[j].dst;
+                                        }
+                                        data.SetValue(item.ToString(), resultText);
                                     }
-                                    data.SetValue(item.ToString(), resultText);
+                                }
+                                else
+                                {
+                                    Debug.LogError("Please set your own Baidu apppid & passwordkey at Translate.cs. You can get them on https://api.fanyi.baidu.com/.");
                                 }
                             }
                         }

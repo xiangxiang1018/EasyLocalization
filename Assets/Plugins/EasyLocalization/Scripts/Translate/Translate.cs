@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using SimpleJSON;
+//using SimpleJSON;
 using UnityEngine.Networking;
 
 namespace EasyLocalization
@@ -37,8 +37,8 @@ namespace EasyLocalization
         //百度翻译最大支持单次6000字节
 
         //去申请百度开发者，免费获取ID和密码（身份认证之后免费升级高级版 0.1秒/次 200万上限）
-        private static string appId = "20200814000542570";
-        private static string password = "vkO0agepd2igxkDe7b9N";
+        public static string appId = "";
+        public static string password = "";
 
         /// <summary>
         /// 协程回调方式（推荐）
@@ -150,81 +150,81 @@ namespace EasyLocalization
         #endregion
 
         #region 谷歌翻译
-        //use  translate.google.cn  so you don't need a vpn
-        //使用translate.google.cn这样不用VPN也没事，国外是不是友好就不知道了
-        //另外说明一下，这个接口不能过于频繁调用，有可能被封IP。。。所以推荐还是百度翻译
-        /// <summary>
-        /// 协程回调方式（推荐）
-        /// </summary>
-        /// <param name="q"></param> 要翻译的文本内容
-        /// <param name="sourceLang"></param> 源语言
-        /// <param name="targetLang"></param> 目标语言
-        /// <param name="callback"></param> 回调事件 错误的情况下返回null
-        /// <returns></returns>
-        public static IEnumerator TranslateByGoogle(string q, LanguageType sourceLang, LanguageType targetLang, Action<TranslationSingleResult> callback)
-        {
-            //url
-            string url = String.Format("https://translate.google.cn/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
-                   sourceLang.ToString(),
-                   targetLang.ToString(),
-                   UnityWebRequest.EscapeURL(q)
-                    );
-            //使用UnityWebRequest配合协程
-            UnityWebRequest request = new UnityWebRequest(url);
-            yield return request;
-            if (request.isDone)
-            {
-                if (request.isHttpError || request.isNetworkError)
-                {
-                    callback.Invoke(null);
-                }
-                else
-                {
-                    var result = JSONNode.Parse(request.downloadHandler.text);
-                    if (result[0] != null && result[0][0] != null)
-                    {
-                        TranslationSingleResult temp = new TranslationSingleResult();
-                        temp.src = result[0][0][1];
-                        temp.dst = result[0][0][0];
-                        callback.Invoke(temp);
-                    }
-                }
-            }
-        }
+        ////use  translate.google.cn  so you don't need a vpn
+        ////使用translate.google.cn这样不用VPN也没事，国外是不是友好就不知道了
+        ////另外说明一下，这个接口不能过于频繁调用，有可能被封IP。。。所以推荐还是百度翻译
+        ///// <summary>
+        ///// 协程回调方式（推荐）
+        ///// </summary>
+        ///// <param name="q"></param> 要翻译的文本内容
+        ///// <param name="sourceLang"></param> 源语言
+        ///// <param name="targetLang"></param> 目标语言
+        ///// <param name="callback"></param> 回调事件 错误的情况下返回null
+        ///// <returns></returns>
+        //public static IEnumerator TranslateByGoogle(string q, LanguageType sourceLang, LanguageType targetLang, Action<TranslationSingleResult> callback)
+        //{
+        //    //url
+        //    string url = String.Format("https://translate.google.cn/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
+        //           sourceLang.ToString(),
+        //           targetLang.ToString(),
+        //           UnityWebRequest.EscapeURL(q)
+        //            );
+        //    //使用UnityWebRequest配合协程
+        //    UnityWebRequest request = new UnityWebRequest(url);
+        //    yield return request;
+        //    if (request.isDone)
+        //    {
+        //        if (request.isHttpError || request.isNetworkError)
+        //        {
+        //            callback.Invoke(null);
+        //        }
+        //        else
+        //        {
+        //            var result = JSONNode.Parse(request.downloadHandler.text);
+        //            if (result[0] != null && result[0][0] != null)
+        //            {
+        //                TranslationSingleResult temp = new TranslationSingleResult();
+        //                temp.src = result[0][0][1];
+        //                temp.dst = result[0][0][0];
+        //                callback.Invoke(temp);
+        //            }
+        //        }
+        //    }
+        //}
 
-        public static TranslationSingleResult TranslateByGoogle(string q, LanguageType sourceLang, LanguageType targetLang)
-        {
-            string jsonResult = String.Empty;
-            //url
-            string url = String.Format("https://translate.google.cn/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
-                   sourceLang.ToString(),
-                   targetLang.ToString(),
-                   UnityWebRequest.EscapeURL(q)
-                   );
-            //webclient
-            WebClient wc = new WebClient();
-            try
-            {
-                jsonResult = wc.DownloadString(url);
+        //public static TranslationSingleResult TranslateByGoogle(string q, LanguageType sourceLang, LanguageType targetLang)
+        //{
+        //    string jsonResult = String.Empty;
+        //    //url
+        //    string url = String.Format("https://translate.google.cn/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
+        //           sourceLang.ToString(),
+        //           targetLang.ToString(),
+        //           UnityWebRequest.EscapeURL(q)
+        //           );
+        //    //webclient
+        //    WebClient wc = new WebClient();
+        //    try
+        //    {
+        //        jsonResult = wc.DownloadString(url);
 
-            }
-            catch
-            {
-                jsonResult = String.Empty;
-            }
-            if (!string.IsNullOrEmpty(jsonResult))
-            {
-                var result = JSONNode.Parse(jsonResult);
-                if (result[0] != null && result[0][0] != null)
-                {
-                    TranslationSingleResult temp = new TranslationSingleResult();
-                    temp.src = result[0][0][1];
-                    temp.dst = result[0][0][0];
-                    return temp;
-                }
-            }
-            return null;
-        }
+        //    }
+        //    catch
+        //    {
+        //        jsonResult = String.Empty;
+        //    }
+        //    if (!string.IsNullOrEmpty(jsonResult))
+        //    {
+        //        var result = JSONNode.Parse(jsonResult);
+        //        if (result[0] != null && result[0][0] != null)
+        //        {
+        //            TranslationSingleResult temp = new TranslationSingleResult();
+        //            temp.src = result[0][0][1];
+        //            temp.dst = result[0][0][0];
+        //            return temp;
+        //        }
+        //    }
+        //    return null;
+        //}
         #endregion
     }
 }
