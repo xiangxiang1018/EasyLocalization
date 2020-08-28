@@ -59,7 +59,7 @@
  
    添加Localization组件，设置正确的id，在设置文本时，不需要关心当前语言类型，只需要设置填充内容即可
  
-   举例：初始化时调用Localization(.id = 1)的SetText(LocalizationDataHelper.GetTextById(2))。
+   举例：初始化时调用Localization(.id = 1)的SetText(LocalizationDataHelper.GetTextById(2))方法
    
    配置表：id = 1 --> 我来自于{0}； id = 2 --> 中国。 
    
