@@ -61,3 +61,9 @@
    配置表：id = 1 --> 我来自于{0}； id = 2 --> 中国
    
    当设置语言为中文时，内容为：我来自于中国。当语言切换为英文时，代码无非再次设置，内容会自动变成：I'm from China
+   
+ - Excel相关
+ 
+    Help文件夹有推荐Excel格式。每一列是一种语言缩写，转为Json直接可以使用。
+    
+    Excel转Json工具推荐：https://neil3d.gitee.io/coding/excel2json.html
