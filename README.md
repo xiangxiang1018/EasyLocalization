@@ -16,7 +16,7 @@
 
   设置当前使用的语言，会自动生成LanguageType.cs（当然手动更改也完全OK）
   
-  此类决定是整个EasyLocalization的依赖
+  此类包含的Enum是整个EasyLocalization的依赖
   
 - 菜单栏 EasyLocalization/2 - Translate Json
   
