@@ -13,11 +13,8 @@ namespace EasyLocalization
         //语言设置优先级，玩家选择语言>系统语言
         public static LanguageType Language { get; set; }
         public static LanguageType LastLanguage { get; set; }
-        //通用多语言配置表
-        public static string LOCALIZATION_CSV_NAME = "localization";
 
-
-        //存储字体
+        //存储字体（预留）
         private static List<Font> fonts = new List<Font>();
 
         //多语言切换（如不需要运行中切换语言功能，请忽略）
@@ -56,7 +53,7 @@ namespace EasyLocalization
             }
         }
 
-        //游戏内语言切换的时候调用，所有基于Localization && runtimeResponse == true会立即刷新
+        //游戏内语言切换的时候调用，所有加载了组件Localization && Localization.runtimeResponse == true会立即刷新
         public static void ChangeLanguage(LanguageType type)
         {
             LastLanguage = Language;

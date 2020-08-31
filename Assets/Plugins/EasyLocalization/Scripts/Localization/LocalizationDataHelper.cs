@@ -36,7 +36,7 @@ namespace EasyLocalization
             return data.GetValue(lang.ToString());
         }
 
-
+        //匹配文字，返回id
         public static int GetIdByText(string text, LanguageType lang)
         {
             if (locDatasDic.Count == 0)
@@ -78,7 +78,7 @@ namespace EasyLocalization
             }
         }
 
-        //存储数据
+        //缓存表数据 1
         public static void WriteConfig(int id, LocalizationData data, bool writeJson = true)
         {
             if (locDatasDic.ContainsKey(id))
@@ -88,7 +88,6 @@ namespace EasyLocalization
             if (writeJson)
                 WriteJson();
         }
-
         public static void WriteConfig(int id, string text, LanguageType lang, string sourceText, LanguageType sourceLang, bool writeJson = true)
         {
             LocalizationData data;
@@ -102,7 +101,7 @@ namespace EasyLocalization
                 WriteJson();
         }
 
-        //生成json
+        //写入数据生成Json文件
         public static void WriteJson()
         {
             string content = JsonUtility.ToJson(new Serialization<int, LocalizationData>(locDatasDic));
@@ -122,18 +121,10 @@ namespace EasyLocalization
         {
             return locDatasDic;
         }
-
-
-
-
-
     }
 
-    public class LocalizationEmpty
-    {
-        public List<LocalizationData> datas = new List<LocalizationData>();
-    }
 
+    //序列化词典
     [Serializable]
     public class Serialization<TKey, TValue> : ISerializationCallbackReceiver
     {
