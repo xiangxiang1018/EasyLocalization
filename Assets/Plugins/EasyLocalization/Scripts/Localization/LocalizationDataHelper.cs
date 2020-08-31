@@ -5,6 +5,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
+
+using Newtonsoft.Json;
 
 namespace EasyLocalization
 {
@@ -65,21 +68,22 @@ namespace EasyLocalization
                 yield return webRequest.SendWebRequest();
                 if (webRequest.isHttpError || webRequest.isNetworkError)
                 {
-                    Debug.LogError("Read Localization.json error!");
+                    Debug.LogError("Read localization.json error!");
                 }
                 else
                 {
-                    if(!string.IsNullOrEmpty(webRequest.downloadHandler.text))
+                    locDatasDic.Clear();
+                    if (!string.IsNullOrEmpty(webRequest.downloadHandler.text))
                     {
-                        locDatasDic = new Dictionary<int, LocalizationData>(JsonUtility.FromJson<Serialization<int, LocalizationData>>(webRequest.downloadHandler.text).ToDictionary());
+                        locDatasDic = JsonConvert.DeserializeObject<Dictionary<int, LocalizationData>>(webRequest.downloadHandler.text);
+                        Debug.Log("EasyLocalization read config complete!");
                     }
-                    Debug.Log("EasyLocalization Read Config Complete!");
                 }
             }
         }
 
-        //缓存表数据 1
-        public static void WriteConfig(int id, LocalizationData data, bool writeJson = true)
+        //缓存表数据
+        public static void WriteConfig(int id, LocalizationData data, bool writeJson = false)
         {
             if (locDatasDic.ContainsKey(id))
                 locDatasDic[id] = data;
@@ -88,7 +92,7 @@ namespace EasyLocalization
             if (writeJson)
                 WriteJson();
         }
-        public static void WriteConfig(int id, string text, LanguageType lang, string sourceText, LanguageType sourceLang, bool writeJson = true)
+        public static void WriteConfig(int id, string text, LanguageType lang, string sourceText, LanguageType sourceLang, bool writeJson = false)
         {
             LocalizationData data;
             if(!locDatasDic.TryGetValue(id, out data))
@@ -104,7 +108,7 @@ namespace EasyLocalization
         //写入数据生成Json文件
         public static void WriteJson()
         {
-            string content = JsonUtility.ToJson(new Serialization<int, LocalizationData>(locDatasDic));
+            string content = JsonConvert.SerializeObject(locDatasDic);
             string path = PathDefinition.Json_Data_Path + PathDefinition.Json_Name;
             //检测文件夹是否存在
             if(!Directory.Exists(PathDefinition.Json_Data_Path))
@@ -124,7 +128,7 @@ namespace EasyLocalization
     }
 
 
-    //序列化词典
+    //分解成两个List
     [Serializable]
     public class Serialization<TKey, TValue> : ISerializationCallbackReceiver
     {
@@ -155,6 +159,20 @@ namespace EasyLocalization
             {
                 target.Add(keys[i], values[i]);
             }
+        }
+    }
+
+
+    [Serializable]
+    public class Serialization<T>
+    {
+        [SerializeField]
+        List<T> target;
+        public List<T> ToList() { return target; }
+
+        public Serialization(List<T> target)
+        {
+            this.target = target;
         }
     }
 }

@@ -18,17 +18,16 @@ namespace EasyLocalization
         {
             get
             {
-                if (string.IsNullOrEmpty(json_local_path) || string.IsNullOrEmpty(json_data_path))
+                if (string.IsNullOrEmpty(json_local_path))
                     GetPath();
                 return json_local_path;
             }
         }
-
         public static string Json_Data_Path
         {
             get
             {
-                if (string.IsNullOrEmpty(json_local_path) || string.IsNullOrEmpty(json_data_path))
+                if (string.IsNullOrEmpty(json_data_path))
                     GetPath();
                 return json_data_path;
             }

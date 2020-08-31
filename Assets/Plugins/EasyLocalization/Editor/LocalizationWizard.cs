@@ -148,6 +148,9 @@ namespace EasyLocalization
                 TranslateData(LocalizationDataHelper.GetLocalizationDic()[key]);
                 yield return new WaitForSomeTime(0.1f);
             }
+
+            LocalizationDataHelper.WriteJson();
+
             EditorUtility.ClearProgressBar();
             EditorUtility.DisplayDialog("EasyLocalization Setting", "Done!", "OK");
         }

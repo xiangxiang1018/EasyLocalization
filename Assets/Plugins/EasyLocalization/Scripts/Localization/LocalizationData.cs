@@ -14,7 +14,7 @@ namespace EasyLocalization
     using UnityEngine;
     
     
-    [System.SerializableAttribute()]
+    [Serializable]
     public class LocalizationData
     {
         

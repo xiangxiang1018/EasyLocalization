@@ -20,11 +20,5 @@ namespace EasyLocalization
         zh,
         
         en,
-        
-        cht,
-        
-        spa,
-        
-        jp,
     }
 }
