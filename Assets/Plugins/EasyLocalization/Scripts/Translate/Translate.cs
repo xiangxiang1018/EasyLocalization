@@ -37,8 +37,8 @@ namespace EasyLocalization
         //百度翻译最大支持单次6000字节
 
         //去申请百度开发者，免费获取ID和密码（身份认证之后免费升级高级版 0.1秒/次 200万上限）
-        public static string appId = "20200814000542570";
-        public static string password = "vkO0agepd2igxkDe7b9N";
+        public static string appId = "";
+        public static string password = "";
 
         /// <summary>
         /// 协程回调方式（推荐）
