@@ -64,6 +64,6 @@
    
  - Excel相关
  
-    Help文件夹有推荐Excel格式。每一列是一种语言缩写，转为Json直接可以使用。
+    Help文件夹有推荐Excel格式。每一列代表一种语言文本，转为Json直接可以使用。
     
     Excel转Json工具推荐：https://neil3d.gitee.io/coding/excel2json.html
